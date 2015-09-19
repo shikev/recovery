@@ -1,0 +1,120 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{changepage}
+
+\title{Homework 1}
+\author{Kevin Shi (shikev)}
+\date{September 22, 2015}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+\noindent\textbf{Problem 1}\\
+\begin{itemize}
+ \item[a.i.)]
+ Convert 29 to binary:\\
+ 00011101\\
+ Invert and add 1\\
+ 11100011\\
+ 
+ \item[a.ii.)]
+ Convert E to binary:\\
+ 00001010\\
+ Invert and add 1\\
+ 11110010\\
+ 
+ \item[a.iii.)]
+ Convert 0136 to binary:\\
+ 10100010\\
+ Invert and add 1\\
+ 10100010\\
+ 
+ \item[a.iv.)]
+ Invert and add 1\\
+ 11011110\\
+ 
+ \item[a.v.)]
+ Convert 0x74 to binary:\\
+ 01110100\\
+ Invert and add 1\\
+ 10001100 + 00000001 = 10001100\\
+ 
+ 
+ \item[b.i.)]
+ 1 + 4 + 16 + 128 + 256 = 405\\
+ 
+ \item[b.ii.)]
+ Ignore leading ones\\
+ -64 + 4 = -60\\
+ 
+ \item[b.iii.)]
+ Ignore leading ones\\
+ -512 + 3 = -509\\
+ 
+ \item[b.iv.)]
+ Convert to hex first by grouping into fours\\
+ 0000101001010011 = 0A53\\
+ 10 * 256 + 5 * 16 + 3 = 2643\\
+ 
+ \item[b.v.)]
+ Ignore leading ones\\
+ -2048 + 512 + 16 + 8 + 1 = -1511\\
+
+\end{itemize}
+\noindent\textbf{Problem 2}\\
+\begin{itemize}
+    \item[a)]
+    a = b - a;\\
+    b = c;\\
+    d = c * d;\\
+    c = d + a;\\
+    
+    \item[b)]
+    mov r11 \#5\\
+    sub r11 r5 r11\\
+    add r7 r11 \#6\\
+    mul r6 r11 r7\\
+    
+    \item[ci)]
+    add r9 r7 r5 LSL \#7\\
+    sub r9 r9 r5 LSL \#2\\
+    add r9 r9 r11\\
+    
+    \item[cii)]
+    add r11 r9 r7\\
+    add r11 r11 \#1\\
+    mul r11 r11 r7\\
+    
+
+\end{itemize}
+
+\noindent\textbf{Problem 3}\\
+\begin{itemize}
+    \item[a)]
+    0x005C0005\\
+    0x002A0001\\
+    something\\
+    0x01060000\\
+    
+    \item[b)]
+    noop\\
+    lw 7 4 1
+    
+
+\end{itemize}
+ 
+
+
+
+
+\end{document}

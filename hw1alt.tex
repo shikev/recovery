@@ -1,0 +1,223 @@
+%You can start at the line started with "\solutions{"
+\documentclass[tikz]{article}
+\usepackage{url,amsfonts, amsmath, amssymb, amsthm,color, enumerate,hyperref}
+
+% Page layout
+\setlength{\textheight}{8.75in}
+\setlength{\columnsep}{2.0pc}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0.0in}
+\setlength{\headsep}{0.0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\parindent}{1pc}
+\newcommand{\shortbar}{\begin{center}\rule{5ex}{0.1pt}\end{center}}
+%\renewcommand{\baselinestretch}{1.1}
+% Macros for course info
+\newcommand{\courseNumber}{EECS 477}
+\newcommand{\courseTitle}{Introduction to Algorithms}
+\newcommand{\semester}{Fall  2015}
+% Theorem-like structures are numbered within SECTION units
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{statement}[theorem]{Statement}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{fact}{Fact}
+%definition style
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{exercise}{Exercise}
+\newtheorem{algorithm}{Algorithm}
+%remark style
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{reduction}[theorem]{Reduction}
+%\newtheorem{question}[theorem]{Question}
+\newtheorem{question}{Question}
+%\newtheorem{claim}[theorem]{Claim}
+%
+% Proof-making commands and environments
+\newcommand{\beginproof}{\medskip\noindent{\bf Proof.~}}
+\newcommand{\beginproofof}[1]{\medskip\noindent{\bf Proof of #1.~}}
+\newcommand{\finishproof}{\hspace{0.2ex}\rule{1ex}{1ex}}
+\newenvironment{solution}[1]{\medskip\noindent{\bf Problem #1.~}}{\shortbar}
+
+%====header======
+\newcommand{\solutions}[5]{
+%\renewcommand{\thetheorem}{{#2}.\arabic{theorem}}
+\vspace{-2ex}
+\begin{center}
+{\courseNumber, \courseTitle
+\hfill {\bf\Large {#1}}\\
+\semester, University of Michigan, Ann Arbor \hfill
+{\em Date: #4}}\\
+\vspace{-1ex}
+\hrulefill\\
+\vspace{4ex}
+{\LARGE Homework {#3} Solutions}\\
+\vspace{2ex}
+\end{center}
+\begin{itemize}
+\item {\bf \Large Group Members: {#2}}
+\item {\bf \Large Collaborators: {#5}}
+\end{itemize}
+\noindent
+\shortbar
+\vspace{3ex}
+}
+% math macros
+\newcommand{\defeq}{\stackrel{\textrm{def}}{=}}
+\newcommand{\Prob}{\textrm{Prob}}
+%==
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\solutions{Group_Name}{list of student_name (unique_name)}{Problem Set Number}{Date of preparation}{Collaborators}
+\solutions{study group}{Xinyan Zhao (zhaoxy), Kevin Shi (shikev), Quincy Davenport(quincyd)}{1}{\today}{Xinyan, Kevin, Quincy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\theproblem}{\arabic{problem}} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Begin the solution for each problem by
+% \begin{solution}{Problem Number} and ends it with \end{solution}
+%
+% the solution for Problem 1
+\begin{solution}{1}\\\\
+The main idea is to create a recurrence relation that describes the algorithm and figure out asymptoptic behavior.\\
+We will first describe the recurrence relation for the algorithm. Then we will prove that the runtime of this algorithm is loglinear.\\
+Recurrence relation:\\\\
+$T(n) = T(\frac{n}{4}) + T(\frac{3n}{4}) + \theta(n)$\\\\
+where $T(\frac{n}{4})$ is the time cost of finding the median of medians\\\\
+where $T(\frac{3n}{4})$ is the time cost of the recurrence in which we reduce the problem size to $\frac{3n}{4}$ (we can
+eliminate a quarter of all values every iteration of the algorithm).\\\\
+and $\theta(n)$ is the time to find the median of every group of four.\\
+\\
+Next we will calculate the upper bound of this algorithm:\\
+\\
+We know $T(x) = x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) \, ,where \, \rho = \sum_{i=0}^{k} a_ib_i^{\rho} = 1$\\
+\\
+from problem 2 (see below for proof of this).\\
+\\
+We can calculate $\rho$\\
+\\
+$\rho = \sum_{i=1}^{n} a_ib_i^{\rho} = (\frac{1}{4})^1 + (\frac{3}{4})^1 = 1$\\
+\\
+Thus\\
+\\
+$T(x) = x(1 + \int_{1}^{x} \frac{g(u)}{u^{1 + 1}}du) = x(1 + \int_{1}^{x} \frac{1}{u}du)$\\
+\\
+$=xlnx$\\
+\\
+The runtime for this algorithm is loglinear. 
+
+
+\medskip
+\noindent{\bf Self-evaluation: 3 points}. We believe that the above is a complete and correct proof.
+\end{solution}
+
+\begin{solution}{2}\\\\
+
+$T(x) = x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) \, ,where \, \rho = \sum_{i=0}^{k} a_ib_i^{\rho} = 1$\\
+The proof of the above statement is as follows:\\
+\\
+First we show that $g(x) = x^{\rho}\int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du$\\\\
+We will show this through induction:\\
+\\
+Assume $g(x) \geq c_1g(x)\,\,cg(x) \leq g(\lambda x) \leq c^{'}g(x)$ or in other words, g is scale free.\\
+\\
+$x^{\rho}\int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du \geq x^{\rho}(x-b_i x) \frac{cg(x)}{max(x^{\rho + 1}, (b_i x)^{\rho + 1})}$\\
+\\
+$=\frac{(1-b_i)cg(x)}{max(1,b_i^{\rho + 1})} \geq c_1g(x)$\\
+\\
+This will hold as long as $c_1 \leq \frac{(1-b_i)c}{max(1,b_i^{\rho + 1})}$\\
+\\
+Now assuming $g(x) \leq c_2g(x)$, and knowing $cg(x) \leq g(\lambda x) \leq c^{'}g(x)$\\
+\\
+$x^{\rho}\int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du \leq x^{\rho}(x-b_i x) \frac{c^{'}g(x)}{min(x^{\rho + 1}, (b_i x)^{\rho + 1})}
+=\frac{(1-b_i)c^{'}g(x)}{min(1,b_i^{\rho + 1})}$\\
+\\
+$\leq c_2g(x)$\\
+\\
+This will hold as long as $c_2 \geq \frac{(1-b_i)c^{'}}{min(1,b_i^{\rho + 1})}$\\
+\\
+Now we can prove that $T(x) = x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) \, ,where \, \rho = \sum_{i=0}^{k} a_ib_i^{\rho} = 1$\\
+\\
+First assume $T(x) \geq c_3T(x)$\\
+\\
+$T(x) = \sum_{i=1}^{k} a_i T(b_i x) + g(x)$\\
+\\
+$\geq \sum_{i=1}^{k} a_i c_3(b_i x)^{\rho}(1 + \int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du) + g(x)$\\
+\\
+$=\sum_{i=1}^{k} a_i c_3(b_i x)^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du - \int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du) + g(x)$\\
+\\
+$=\sum_{i=1}^{k} a_i c_3(b_i x)^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du - \sum_{i=1}^{k}a_i c_3 (b_i x)^{\rho} \int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du) + g(x)$\\
+\\
+$=c_3 x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) - (\sum_{i=1}^{k} a_i c_3 b_i^{\rho} x^{\rho} \int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du) + g(x)$\\
+\\
+$\geq c_3 x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) - c_3\sum_{i=1}^{k} a_i b_i^{\rho} c_2 g(x) + g(x)$\\
+\\
+$=c_3 x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) - (c_2 c_3 - 1) * g(x)$\\
+\\
+$\geq c_3 x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du)$\\
+\\
+$=c_3*T(x)$\\
+\\
+This will hold as long as g(x) is nonnegative.\\
+\\
+Next, we will assume $T(x) \leq c_4 T(x)$ and use the same logic as we just did above.\\
+\\
+$T(x) = \sum_{i=1}^{k} a_i T(b_i x) + g(x)$\\
+\\
+$\leq \sum_{i=1}^{k} a_i c_4(b_i x)^{\rho}(1 + \int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du) + g(x)$\\
+\\
+$=\sum_{i=1}^{k} a_i c_4(b_i x)^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du - \int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du) + g(x)$\\
+\\
+$=\sum_{i=1}^{k} a_i c_4(b_i x)^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du - \sum_{i=1}^{k}a_i c_4 (b_i x)^{\rho} \int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du) + g(x)$\\
+\\
+$=c_4 x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) - (\sum_{i=1}^{k} a_i c_4 b_i^{\rho} x^{\rho} \int_{b_ix}^{x} \frac{g(u)}{u^{\rho + 1}}du) + g(x)$\\
+\\
+$\leq c_4 x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) - c_4\sum_{i=1}^{k} a_i b_i^{\rho} c_1 g(x) + g(x)$\\
+\\
+$=c_4 x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) - (c_1 c_4 - 1) * g(x)$\\
+\\
+$\leq c_4 x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du)$\\
+\\
+$=c_4*T(x)$\\
+\\
+Using the conclusions from these two steps, we have proved that\\
+$T(x) = x^{\rho}(1 + \int_{1}^{x} \frac{g(u)}{u^{\rho + 1}}du) \, ,where \, \rho = \sum_{i=0}^{k} a_ib_i^{\rho} = 1$\\
+
+
+\medskip
+\noindent{\bf Self-evaluation: 3 point}. We believe that the above is a complete and correct proof.
+
+\end{solution}
+
+\begin{solution}{3}\\\\
+Because we need to achieve $O(logn)$ runtime we have to use a modified binary search that narrows down
+our search space in one array at a time. The pseudocode for the algorithm is described below:\\
+
+\noindent$find(x, y, i)$\\
+\indent  $if\,x.length == 0$\\
+\indent\indent    $return y[i]$\\
+\indent  $if\,y.length == 0$\\
+\indent\indent    $return x[i]$\\
+\indent  $if\,i == 1$\\
+\indent\indent   $return\,min(x[i], y[i])$\\
+\indent  $a = min(\frac{1}{2}i, x.length)$\\
+\indent $b = min(\frac{1}{2}i, y.length)$\\
+\indent$if\,x[a] \leq y[b]$\\
+\indent\indent  $find(x[a+1:end],y,i-a)$\\
+\indent$else$\\
+\indent\indent  $find(x,y[b+1:end],i-b)$\\
+
+\medskip
+\noindent{\bf Self-evaluation: 3 point}. We believe the algorithm we have is correct in the context of the problem.
+\end{solution}
+
+\end{document}
